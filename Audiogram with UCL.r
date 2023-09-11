@@ -3,6 +3,7 @@ library(readr)
 library(tidyverse)
 library(ggplot2)
 library(ggpubr)
+library(svglite)
 
 # Load aud data as data frame "dat" =================================
 dat <- read_csv("data/aud_data_UCL.csv")
@@ -90,8 +91,19 @@ ptt.ucl.plot <- ggplot(data = ptt.long, aes(y = dB, x = freqLabels, group = ear,
   
   geom_hline(yintercept=25, linetype="dashed", color = "black", linewidth=0.5)+ # Highlight line at 25dB
   labs(x = "Frequency (kHz)", y = "Threshold (dB HL)")+ # Axis labels
-  ggtitle("Audiogram") + # Title of plot
+  ggtitle("Audiogram and UCL") + # Title of plot
   theme_bw()+ # Specify general theme of plot
   theme(plot.title = element_text(size = titlesz), axis.text = element_text(size = axlabsz)) # Adjust text sizes of plot
 
-# Arrange plots with ggpubr package ==========================================================================
+# Arrange plots with ggpubr package and save ==========================================================================
+
+final.plot <- ggarrange(ptt.plot, ptt.ucl.plot, ncol = 2, nrow = 1)
+
+# Save as png
+png(file="output/audiogram.png",
+    width=1200, height=600)
+final.plot
+dev.off()
+
+# Save as svg
+ggsave(file="output/audiogram.svg", plot=final.plot, units = "cm", width=30, height=15)
