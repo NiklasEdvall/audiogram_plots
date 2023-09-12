@@ -44,7 +44,8 @@ ucl.long <- ucl.long %>%
 
 # Specify shared plot options to make it easy to modify all plots ============================================
 titlesz = 16 #Title text size
-axlabsz = 12 #Axis label text size
+axlabsz = 14 #Axis label text size
+axtitlesz = 16 #Axis title size
 linew = 0.5 #Linewith
 pointsz = 1 #Point size
 pointa = 0.75 #Point alpha (opacity)
@@ -59,7 +60,7 @@ ptt.plot <- ggplot(data = ptt.long, aes(y = dB, x = freqLabels, group = ear, col
   stat_summary(fun = mean, #plot mean audiogram
                fun.min = function(x) mean(x) - std_error(x), # Negative error bar (can use sd() for std deviation)
                fun.max = function(x) mean(x) + std_error(x), # Positive error bar (can use sd() for std deviation)
-               geom = "pointrange", size = 1, alpha = pointa, position=position_dodge(width=pointscat)) + # Point options
+               geom = "pointrange", size = pointsz, alpha = pointa, position=position_dodge(width=pointscat)) + # Point options
   stat_summary(fun = mean, geom = "line", linewidth = linew) + # Line options
   
   scale_y_reverse(limits = c(ymax,ymin), breaks = seq(ymin, ymax, by=10))+ #Y-scale options
@@ -68,7 +69,7 @@ ptt.plot <- ggplot(data = ptt.long, aes(y = dB, x = freqLabels, group = ear, col
   labs(x = "Frequency (kHz)", y = "Threshold (dB HL)")+ # Axis labels
   ggtitle("Audiogram") + # Title of plot
   theme_bw()+ # Specify general theme of plot
-  theme(plot.title = element_text(size = titlesz), axis.text = element_text(size = axlabsz)) # Adjust text sizes of plot
+  theme(plot.title = element_text(size = titlesz), axis.text = element_text(size = axlabsz), axis.title=element_text(size=axtitlesz)) # Adjust text sizes of plot
 
 # Create plot of PTT and UCL combining data frames ptt.long and ucl.long =====================================
 ptt.ucl.plot <- ggplot(data = ptt.long, aes(y = dB, x = freqLabels, group = ear, color = ear, shape = ear))+
@@ -93,17 +94,17 @@ ptt.ucl.plot <- ggplot(data = ptt.long, aes(y = dB, x = freqLabels, group = ear,
   labs(x = "Frequency (kHz)", y = "Threshold (dB HL)")+ # Axis labels
   ggtitle("Audiogram and UCL") + # Title of plot
   theme_bw()+ # Specify general theme of plot
-  theme(plot.title = element_text(size = titlesz), axis.text = element_text(size = axlabsz)) # Adjust text sizes of plot
+  theme(plot.title = element_text(size = titlesz), axis.text = element_text(size = axlabsz), axis.title=element_text(size=axtitlesz)) # Adjust text sizes of plot
 
 # Arrange plots with ggpubr package and save ==========================================================================
 
 final.plot <- ggarrange(ptt.plot, ptt.ucl.plot, ncol = 2, nrow = 1)
 
 # Save as png
-png(file="output/audiogram.png",
-    width=1200, height=600)
+png(file="output/audiogram1.png",
+    width=1040, height=500)
 final.plot
 dev.off()
 
 # Save as svg
-ggsave(file="output/audiogram.svg", plot=final.plot, units = "cm", width=30, height=15)
+ggsave(file="output/audiogram1.svg", plot=final.plot, units = "cm", width=30, height=15)
