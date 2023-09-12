@@ -1,6 +1,6 @@
 # audiogram_plots
 
-Use R and the ggplot package to create mean (+/- SEM or SD) audiogram plots data in CSV/Excel format. Pure tone threshold (PTT) audiograms with or without Uncomfortable Loudness Levels (UCL) for Left/Right ears combined or for groups with L/R ears split.
+Use R and the ggplot package to create mean (+/- SEM or SD) audiogram plots from data in CSV/Excel format. Pure tone threshold (PTT) audiograms with or without Uncomfortable Loudness Levels (UCL) for Left/Right ears combined or for groups with L/R ears split.
 
 Variables for text-size, linewidth, etc. are specified to make it easy to keep appearance same for all plots.
 
